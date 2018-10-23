@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="ie.wit.aubane.wanderlust10.activities.MyTrips">
+    <item
+        android:id="@+id/menu_my_trips"
+        android:title="@string/menu_my_trips"
+        android:onClick="menu_my_trips"/>
+    <item
+        android:id="@+id/menu_current_trip"
+        android:onClick="menu_current_trip"
+        android:title="@string/menu_current_trip" />
+    <item
+        android:id="@+id/menu_reset"
+        android:title="@string/menu_reset"
+        android:onClick="menu_reset"/>
+</menu>
