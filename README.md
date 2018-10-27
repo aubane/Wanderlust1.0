@@ -19,9 +19,7 @@ Persistence approach:
 The information entered by the user are saved and loaded using JSON File Support.
 
 References:
-Icons: 
 - https://material.io/tools/icons/?style=baseline
-Tutorials & help: 
 - https://developer.android.com/reference/
 - https://stackoverflow.com/questions/18588781/android-popup-menu-when-list-item-view-pressed
 - https://stackoverflow.com/questions/8452526/android-can-i-use-putextra-to-pass-multiple-values
