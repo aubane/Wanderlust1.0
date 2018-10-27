@@ -1,5 +1,7 @@
 package ie.wit.aubane.wanderlust10.models;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,7 +40,7 @@ public class Trip {
         destination = json.getString(JSON_DESTINATION);
         start = json.getString(JSON_START);
         end = json.getString(JSON_END);
-
+        entries = new ArrayList<Entry>();
     }
 
     public JSONObject toJSON() throws JSONException{
@@ -69,5 +71,8 @@ public class Trip {
 
     public void addEntry(Entry entry){
         entries.add(entry);
+        Log.v("Wanderlust", "Trip: entry (hopefully) added:"+ entries.toString());
     }
+
+
 }

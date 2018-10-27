@@ -18,12 +18,14 @@ import java.util.ArrayList;
 
 public class TripSerializer {
     private Context mContext;
-    private String mFilename;
+    private String mFilenameTrips;
+    private String mFilenameEntries;
 
-    public TripSerializer(Context c, String f)
+    public TripSerializer(Context c, String ftrips, String fentries)
     {
         mContext = c;
-        mFilename = f;
+        mFilenameTrips = ftrips;
+        mFilenameEntries = fentries;
     }
 
     public void saveTrips(ArrayList<Trip> trips) throws JSONException, IOException
@@ -37,7 +39,7 @@ public class TripSerializer {
         Writer writer = null;
         try
         {
-            OutputStream out = mContext.openFileOutput(mFilename, Context.MODE_PRIVATE);
+            OutputStream out = mContext.openFileOutput(mFilenameTrips, Context.MODE_PRIVATE);
             writer = new OutputStreamWriter(out);
             writer.write(array.toString());
         }
@@ -55,7 +57,7 @@ public class TripSerializer {
         try
         {
             // open and read the file into a StringBuilder
-            InputStream in = mContext.openFileInput(mFilename);
+            InputStream in = mContext.openFileInput(mFilenameTrips);
             reader = new BufferedReader(new InputStreamReader(in));
             StringBuilder jsonString = new StringBuilder();
             String line = null;
@@ -95,7 +97,7 @@ public class TripSerializer {
         Writer writer = null;
         try
         {
-            OutputStream out = mContext.openFileOutput(mFilename, Context.MODE_PRIVATE);
+            OutputStream out = mContext.openFileOutput(mFilenameEntries, Context.MODE_PRIVATE);
             writer = new OutputStreamWriter(out);
             writer.write(array.toString());
         }
@@ -113,7 +115,7 @@ public class TripSerializer {
         try
         {
             // open and read the file into a StringBuilder
-            InputStream in = mContext.openFileInput(mFilename);
+            InputStream in = mContext.openFileInput(mFilenameEntries);
             reader = new BufferedReader(new InputStreamReader(in));
             StringBuilder jsonString = new StringBuilder();
             String line = null;

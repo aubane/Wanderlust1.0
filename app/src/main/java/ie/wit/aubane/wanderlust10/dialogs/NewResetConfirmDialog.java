@@ -6,37 +6,37 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
-import android.widget.EditText;
 
-public class NewTripDialog extends DialogFragment {
+public class NewResetConfirmDialog extends DialogFragment {
 
     DialogListener listener;
 
-    public static String newName;
+    private String message ="";
+    AlertDialog.Builder builder;
+    public String origin;
+    private String title="Reset";
+    private String posiviteMessageText = "Reset";
+
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        newName="";
         // Use the Builder class for convenient dialog construction
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        final EditText name = new EditText(getContext());
-        name.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setTitle("New Trip")
-                .setView(name)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder = new AlertDialog.Builder(getActivity());
+
+        builder.setTitle(title)
+                .setMessage(message+"\nAre you sure?")
+                .setPositiveButton(posiviteMessageText, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        newName = name.getText().toString();
-                        Log.v("Wanderlust", "newName: "+newName+" length:"+newName.length());
-                        listener.onDialogPositiveClick(NewTripDialog.this);
+                        listener.onDialogPositiveClick(NewResetConfirmDialog.this);
 
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        listener.onDialogNegativeClick(NewTripDialog.this);
+                        listener.onDialogNegativeClick(NewResetConfirmDialog.this);
                     }
                 });
 
@@ -56,8 +56,26 @@ public class NewTripDialog extends DialogFragment {
         }
     }
 
-    public String getNewName(){
-        return newName;
+    public void setOrigin(String origin){
+        this.origin = origin;
+        switch(origin){
+            case "Trips":
+                message= "This will erase all trips and entries.";
+                break;
+            case "Entries":
+                message= "This will erase all entries from this trip.";
+                break;
+            case "SingleTrip":
+                message= "The selected trip will be deleted.";
+                title="Delete";
+                posiviteMessageText="Delete";
+                break;
+            case "SingleEntry":
+                message="The selected entry will be deleted.";
+                title="Delete";
+                posiviteMessageText="Delete";
+                break;
+        }
     }
 
 

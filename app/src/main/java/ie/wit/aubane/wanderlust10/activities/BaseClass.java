@@ -42,27 +42,38 @@ public class BaseClass extends AppCompatActivity {
             my_trips.setVisible(false);
             current_trip.setVisible(false);
             reset.setVisible(true);
+            if(app.trips.size()>0){
+                reset.setEnabled(true);
+            }else{
+                reset.setEnabled(false);
+            }
         }
         else if(this instanceof TripView){
             my_trips.setVisible(true);
             current_trip.setVisible(false);
             reset.setVisible(true);
+            if(app.getEntries(((TripView)this).trip_id).size()>0){
+                reset.setEnabled(true);
+            }else{
+                reset.setEnabled(false);
+            }
+        }
+        else if(this instanceof EntryView) {
+            my_trips.setVisible(true);
+            current_trip.setVisible(true);
+            reset.setVisible(false);
         }
         else if(this instanceof NewTrip){
             my_trips.setVisible(true);
             current_trip.setVisible(false);
             reset.setVisible(false);
         }
-        else if(this instanceof  NewEntry){
+        else if(this instanceof NewEntry){
             my_trips.setVisible(true);
             current_trip.setVisible(true);
             reset.setVisible(false);
         }
-        if(app.trips.size()>0){
-            reset.setEnabled(true);
-        }else{
-            reset.setEnabled(false);
-        }
+
         return true;
     }
 
@@ -81,15 +92,16 @@ public class BaseClass extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.v("Wanderlust", "Exiting Wanderlust... ");
-        /*try {
+        Log.v("Wanderlust", this.getLocalClassName()+"Exiting Wanderlust... ");
+        try {
             app.getSerializer().saveTrips((ArrayList)app.trips);
+            app.getSerializer().saveEntries((ArrayList)app.entries);
             Log.v("Wanderlust", "Wanderlust JSON File Saved...");
         }
         catch (Exception e)
         {
             Log.v("Wanderlust", "Error Saving Wanderlust... " + e.getMessage());
-        }*/
+        }
     }
 
 }

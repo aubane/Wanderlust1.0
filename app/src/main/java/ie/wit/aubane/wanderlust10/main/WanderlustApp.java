@@ -22,23 +22,25 @@ public class WanderlustApp extends Application {
     {
         super.onCreate();
         Log.v("Wanderlust", "Wanderlust App Started");
-        /*serializer = new TripSerializer(this, "wanderlust.json");
+        serializer = new TripSerializer(this, "wanderlusttrips.json", "wanderlustentries.json");
         try{
             trips = serializer.loadTrips();
             Log.v("Wanderlust", "Wanderlust trips JSON file Created/Loaded");
         } catch(Exception e){
-            Log.v("Wanderlust", "Error loading Wanderlust trips: "+e.getMessage());*/
+            Log.v("Wanderlust", "Error loading Wanderlust trips: "+e.getMessage());
             trips = new ArrayList<Trip>();
-        //}
+        }
         amountTrips = trips.size();
 
-        /*try{
+        try{
             entries = serializer.loadEntries();
+            setEntriesInTrips();
             Log.v("Wanderlust", "Wanderlust entries JSON file Created/Loaded");
         } catch(Exception e){
-            Log.v("Wanderlust", "Error loading Wanderlust entries: "+e.getMessage());*/
+            Log.v("Wanderlust", "Error loading Wanderlust entries: "+e.getMessage());
             entries = new ArrayList<Entry>();
-        //}
+        }
+
     }
 
     public void newTrip(Trip trip){
@@ -50,6 +52,8 @@ public class WanderlustApp extends Application {
     public void newEntry(int trip, Entry entry){
         entries.add(entry);
         trips.get(trip).addEntry(entry);
+        Log.v("Wanderlust", "All entries:" +entries.toString());
+        Log.v("Wanderlust", "Trip entries:" +trips.get(trip).entries.toString());
     }
 
     public List<Entry> getEntries(int trip){
@@ -62,16 +66,35 @@ public class WanderlustApp extends Application {
         return list;
     }
 
+    private void setEntriesInTrips(){
+        for(Entry e : entries){
+            Log.v("Wanderlust", ""+e.trip_id);
+            trips.get(e.trip_id).addEntry(e);
+        }
+    }
+
     public void clearEntriesForTrip(int trip_id){
-        trips.get(trip_id).entries.clear();
+        //trips.get(trip_id).entries.clear();
         for(int i = 0; i<entries.size();i++){
             if(entries.get(i).trip_id == trip_id){
                 entries.remove(i);
+                i--;
+            }
+        }
+        for(Entry e : entries){
+            if(e.trip_id>trip_id){
+                e.trip_id = e.trip_id-1;
             }
         }
     }
 
-    /*public TripSerializer getSerializer() {
+    public void deleteSingleEntry(int trip_id, int entry_id){
+        Entry e = trips.get(trip_id).entries.get(entry_id);
+        entries.remove(e);
+        trips.get(trip_id).entries.remove(e);
+    }
+
+    public TripSerializer getSerializer() {
         return serializer;
-    }*/
+    }
 }

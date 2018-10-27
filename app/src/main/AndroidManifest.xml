@@ -21,15 +21,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.MyTrips"></activity>
-        <activity android:name=".activities.TripView"
-            android:parentActivityName=".activities.MyTrips">
-        </activity>
-        <activity android:name=".activities.NewEntry"
-            android:parentActivityName=".activities.TripView">
-        </activity>
-        <activity android:name=".activities.NewTrip"
-            android:parentActivityName=".activities.TripView">
-        </activity>
+        <activity android:name=".activities.TripView"></activity>
+        <activity android:name=".activities.NewEntry"></activity>
+        <activity android:name=".activities.NewTrip"></activity>
+        <activity android:name=".activities.EntryView"></activity>
     </application>
 
 </manifest>

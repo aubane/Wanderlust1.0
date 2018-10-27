@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <item
+        android:id="@+id/item_edit"
+        android:title="Edit"
+        android:onClick="option_edit"
+        android:visible="true"
+        android:enabled="false"/>
+    <item
+        android:id="@+id/item_delete"
+        android:title="Delete"
+        android:onClick="option_delete"
+        android:visible="true"/>
+</menu>

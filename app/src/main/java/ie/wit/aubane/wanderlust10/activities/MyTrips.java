@@ -1,32 +1,40 @@
 package ie.wit.aubane.wanderlust10.activities;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.text.method.SingleLineTransformationMethod;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import ie.wit.aubane.wanderlust10.dialogs.DialogListener;
 import ie.wit.aubane.wanderlust10.R;
+import ie.wit.aubane.wanderlust10.dialogs.NewResetConfirmDialog;
 import ie.wit.aubane.wanderlust10.models.Trip;
 import ie.wit.aubane.wanderlust10.models.TripAdapter;
 
-public class MyTrips extends BaseClass /*implements DialogListener*/{
+public class MyTrips extends BaseClass implements DialogListener{
 
     //DialogListener listener;
     public ListView listTrips;
     public TripAdapter adapter;
     public String[] sortOptions = {"name", "date", "location"};
     public Spinner dropDownOptions;
+    ImageView more;
+    int single_trip_id=-1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +51,10 @@ public class MyTrips extends BaseClass /*implements DialogListener*/{
         listTrips.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Toast.makeText(getApplicationContext(), tripList.get((int)id)+" clicked", Toast.LENGTH_SHORT).show();
-                //title_trip.setText(tripList.get((int) id).toString());
-                Log.v("Wanderlust", "Clicked on trip item");
-
                 Intent intent = new Intent(getApplicationContext(), TripView.class);
-                intent.putExtra("tripID", ""+position);
+                Bundle extras = new Bundle();
+                extras.putString("tripID", ""+position);
+                intent.putExtras(extras);
                 startActivity(intent);
 
             }
@@ -66,48 +72,68 @@ public class MyTrips extends BaseClass /*implements DialogListener*/{
         });
 
         dropDownOptions.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, sortOptions));
+
+        more = findViewById(R.id.icon_more);
+
     }
 
     @Override
     public void menu_reset(MenuItem item){
-        app.trips.clear();
-        app.entries.clear();
-        /*try{
-            app.getSerializer().saveTrips((ArrayList)app.trips);
-            Log.v("Wanderlust", "Wanderlust Trips JSON File Reset...");
-            app.getSerializer().saveEntries((ArrayList)app.entries);
-            Log.v("Wanderlust", "Wanderlust Entries JSON File Reset...");
-        }
-        catch (Exception e)
-        {
-            Log.v("Wanderlust", "Error Resetting Wanderlust... " + e.getMessage());
-        }*/
+        showNewDialog("Trips");
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        Log.v("Wanderlust", "MyTrips: onResume()");
         adapter.notifyDataSetChanged();
     }
 
-    /*public void showNewTripDialog() {
+    public void showNewDialog(String origin) {
         // Create an instance of the dialog fragment and show it
-        DialogFragment dialog = new NewTripDialog();
+        NewResetConfirmDialog dialog = new NewResetConfirmDialog();
+        dialog.setOrigin(origin);
         dialog.show(getFragmentManager(), "TEST");
     }
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
-        Log.v("Wanderlust", "newName["+newName+"]");
-        if(newName.length()>0) {
-            Log.v("Wanderlust", "input name");
-            tripList.add(new Trip(newName));
-        }else {
-            Log.v("Wanderlust", "no input");
-            tripList.add(new Trip("Trip " + (tripList.size() + 1)));
+        Log.v("Wanderlust", "reset approved - myTrips class");
+        switch(((NewResetConfirmDialog)dialog).origin){
+            case "Trips":
+                app.trips.clear();
+                app.entries.clear();
+                break;
+            case "SingleTrip":
+                app.trips.remove(single_trip_id);
+                app.clearEntriesForTrip(single_trip_id);
+                single_trip_id = -1;
+                break;
         }
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
-        Toast.makeText(getApplicationContext(), "nope", Toast.LENGTH_SHORT);
-    }*/
+        Log.v("Wanderlust", "reset canceled - myTrips class");
+    }
+
+    public void showMenu (View view)
+    {
+        single_trip_id = ((ListView)view.getParent().getParent()).getPositionForView(view);
+        Log.v("Wanderlust", ""+single_trip_id);
+        PopupMenu menu = new PopupMenu (this, view);
+        menu.inflate (R.menu.options_menu_layout);
+        menu.show();
+    }
+
+    public void option_delete(MenuItem item){
+        Log.i ("Wanderlust", "option_delete");
+        showNewDialog("SingleTrip");
+    }
+    public void option_edit(MenuItem item){
+        Log.i ("Wanderlust", "option_edit");
+    }
 
 }
 

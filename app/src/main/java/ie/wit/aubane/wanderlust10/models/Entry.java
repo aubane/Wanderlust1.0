@@ -43,7 +43,7 @@ public class Entry {
     }
 
     public String toString(){
-        return name+" (Trip "+trip_id+"): "+text;
+        return name;
     }
 
     /**
