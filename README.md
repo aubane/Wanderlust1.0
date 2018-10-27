@@ -1,5 +1,6 @@
 # Wanderlust1.0
 Mobile App Development CA
+
 Aubane Fève, Student ID: 20083129
 
 Wanderlust is an App with the purpose of planning, organizing and looking back on trips.
@@ -26,7 +27,7 @@ Icons:
 
 - https://material.io/tools/icons/?style=baseline
 
-Tutorials & help:
+Tutorials & Help:
 
 - https://developer.android.com/reference/
 - https://stackoverflow.com/questions/18588781/android-popup-menu-when-list-item-view-pressed
