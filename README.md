@@ -34,3 +34,7 @@ Tutorials & Help:
 - https://stackoverflow.com/questions/8452526/android-can-i-use-putextra-to-pass-multiple-values
 - https://stackoverflow.com/questions/39916178/how-to-show-datepickerdialog-on-button-click
 - https://ddrohan.github.io/wit-mad-1-2018/labwall.html
+
+Youtube video with demonstration of main features (Version 1.0):
+
+https://youtu.be/VLVXidy88fk
