@@ -8,28 +8,35 @@ import java.util.Random;
 
 public class Entry {
 
-    public static final String JSON_ID = "id";
+    /*public static final String JSON_ID = "id";
     public static final String JSON_NAME = "name";
     public static final String JSON_TEXT = "text";
-    public static final String JSON_TRIP = "trip_id";
+    public static final String JSON_TRIP = "trip_id";*/
 
-    public long id;
+    public int id;
     public String name;
-    public String text;
+    public String content;
     public int trip_id;
 
-    public Entry(int trip_id, String name, String text){
-        this.id = unsignedLong();
+    public Entry(){
+        name="";
+        content="";
+        trip_id=-1;
+    }
+    public Entry(int trip_id, String name, String content){
         this.name=name;
-        this.text=text;
+        this.content=content;
         this.trip_id = trip_id;
-
     }
 
+    public String toString(){
+        return name;
+    }
+    /*
     public Entry(JSONObject json) throws JSONException {
         id = json.getLong(JSON_ID);
         name = json.getString(JSON_NAME);
-        text = json.getString(JSON_TEXT);
+        content = json.getString(JSON_TEXT);
         trip_id = json.getInt(JSON_TRIP);
     }
 
@@ -41,15 +48,12 @@ public class Entry {
         json.put(JSON_TRIP, trip_id);
         return json;
     }
-
-    public String toString(){
-        return name;
-    }
+    */
 
     /**
      * Generate a long greater than zero
      * @return Unsigned Long value greater than zero
-     */
+     *
     private Long unsignedLong() {
         long rndVal = 0;
         do {
@@ -57,4 +61,5 @@ public class Entry {
         } while (rndVal <= 0);
         return rndVal;
     }
+    */
 }

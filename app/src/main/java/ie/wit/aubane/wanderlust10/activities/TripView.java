@@ -49,7 +49,7 @@ public class TripView extends BaseClass implements DialogListener {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 start_date.setText(year + "-" + month + "-" + dayOfMonth);
-                app.trips.get(trip_id).start = start_date.getText().toString();
+                app.dbManager.getAll().get(trip_id).start = start_date.getText().toString();
             }
         };
 
@@ -57,7 +57,7 @@ public class TripView extends BaseClass implements DialogListener {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 end_date.setText(year + "-" + month + "-" + dayOfMonth);
-                app.trips.get(trip_id).start = end_date.getText().toString();
+                app.dbManager.getAll().get(trip_id).end = end_date.getText().toString();
             }
         };
 
@@ -67,7 +67,7 @@ public class TripView extends BaseClass implements DialogListener {
         Log.v("Wanderlust", "TripView: id passed from Intent: "+trip_id);
 
         listEntry = findViewById(R.id.list_entries);
-        entries_list = app.getEntries(trip_id);
+        entries_list = app.dbManager.getEntriesFromTrip(trip_id);
         adapter = new EntryAdapter(this, entries_list);
         listEntry.setAdapter(adapter);
         listEntry.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -88,13 +88,13 @@ public class TripView extends BaseClass implements DialogListener {
         start_date = findViewById(R.id.start_date);
         end_date = findViewById(R.id.end_date);
 
-        title_trip.setText(app.trips.get(trip_id).name);
-        destination.setText(app.trips.get(trip_id).destination);
-        start_date.setText(app.trips.get(trip_id).start);
-        end_date.setText(app.trips.get(trip_id).end);
+        title_trip.setText(app.dbManager.getAll().get(trip_id).name);
+        destination.setText(app.dbManager.getAll().get(trip_id).destination);
+        start_date.setText(app.dbManager.getAll().get(trip_id).start);
+        end_date.setText(app.dbManager.getAll().get(trip_id).end);
 
-        splitDate("start", app.trips.get(trip_id).start);
-        splitDate("end", app.trips.get(trip_id).end);
+        splitDate("start", app.dbManager.getAll().get(trip_id).start);
+        splitDate("end", app.dbManager.getAll().get(trip_id).end);
 
         destination.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,8 +129,8 @@ public class TripView extends BaseClass implements DialogListener {
     public void onResume(){
         super.onResume();
         Log.v("Wanderlust", "TripView: onResume()");
-        entries_list.clear();
-        entries_list.addAll(app.getEntries(trip_id));
+        //entries_list.clear();
+        //entries_list.addAll(app.dbManager.getEntriesFromTrip(trip_id));
         adapter.notifyDataSetChanged();
     }
 
@@ -157,9 +157,9 @@ public class TripView extends BaseClass implements DialogListener {
     }
 
     private void reset(){
-        app.clearEntriesForTrip(trip_id);
+        app.dbManager.deleteEntriesFromTrip(trip_id);
         entries_list.clear();
-        entries_list.addAll(app.getEntries(trip_id));
+        entries_list.addAll(app.dbManager.getEntriesFromTrip(trip_id));
         adapter.notifyDataSetChanged();
     }
 
@@ -171,7 +171,7 @@ public class TripView extends BaseClass implements DialogListener {
             switch(((EditDialog) dialog).origin){
                 case "destination":
                     destination.setText(text);
-                    app.trips.get(trip_id).destination = text;
+                    app.dbManager.getAll().get(trip_id).destination = text;
                     break;
             }
         }else if(dialog instanceof NewResetConfirmDialog){
@@ -181,9 +181,9 @@ public class TripView extends BaseClass implements DialogListener {
                     break;
                 case "SingleEntry":
                     Log.v("Wanderlust", "should delete entry");
-                    app.deleteSingleEntry(trip_id, single_entry_id);
+                    app.dbManager.deleteSingleEntry(single_entry_id);
                     entries_list.clear();
-                    entries_list.addAll(app.getEntries(trip_id));
+                    entries_list.addAll(app.dbManager.getEntriesFromTrip(trip_id));
                     single_entry_id = -1;
                     adapter.notifyDataSetChanged();
                     break;

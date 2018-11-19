@@ -40,4 +40,5 @@ public class TripAdapter extends ArrayAdapter<Trip>
     {
         return trips.size();
     }
+
 }

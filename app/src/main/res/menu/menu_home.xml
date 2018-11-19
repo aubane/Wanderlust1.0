@@ -11,6 +11,10 @@
         android:onClick="menu_current_trip"
         android:title="@string/menu_current_trip" />
     <item
+        android:id="@+id/menu_logout"
+        android:onClick="menu_logout"
+        android:title="@string/menu_logout" />
+    <item
         android:id="@+id/menu_reset"
         android:title="@string/menu_reset"
         android:onClick="menu_reset"/>

@@ -17,23 +17,31 @@ public class Trip {
     public static final String JSON_START = "start";
     public static final String JSON_END = "end";
 
-    public long id;
+    public int id;
     public String name;
     public String destination;
     public String start;
     public String end;
-    public List<Entry> entries;
+
+    public Trip(){
+        name="";
+        destination="";
+        start="";
+        end="";
+    }
 
     public Trip(String name, String destination, String start, String end){
-        this.id = unsignedLong();
         this.name=name;
         this.destination=destination;
         this.start=start;
         this.end=end;
-        entries = new ArrayList<Entry>();
-
     }
 
+    public String toString(){
+        return name+", Destination: "+destination;
+    }
+
+    /*
     public Trip(JSONObject json) throws JSONException {
         id = json.getLong(JSON_ID);
         name = json.getString(JSON_NAME);
@@ -52,15 +60,12 @@ public class Trip {
         json.put(JSON_END, end);
         return json;
     }
-
-    public String toString(){
-        return name+", Destination: "+destination;
-    }
+    */
 
     /**
      * Generate a long greater than zero
      * @return Unsigned Long value greater than zero
-     */
+     *
     private Long unsignedLong() {
         long rndVal = 0;
         do {
@@ -68,11 +73,6 @@ public class Trip {
         } while (rndVal <= 0);
         return rndVal;
     }
-
-    public void addEntry(Entry entry){
-        entries.add(entry);
-        Log.v("Wanderlust", "Trip: entry (hopefully) added:"+ entries.toString());
-    }
-
+    */
 
 }

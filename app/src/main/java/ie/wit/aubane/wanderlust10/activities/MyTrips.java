@@ -29,6 +29,7 @@ import ie.wit.aubane.wanderlust10.models.TripAdapter;
 public class MyTrips extends BaseClass implements DialogListener{
 
     //DialogListener listener;
+    public List<Trip> trips;
     public ListView listTrips;
     public TripAdapter adapter;
     public String[] sortOptions = {"name", "date", "location"};
@@ -42,10 +43,12 @@ public class MyTrips extends BaseClass implements DialogListener{
         setContentView(R.layout.activity_mytrips);
         Log.v("Wanderlust", "Arrived in MyTrips Activity");
         dropDownOptions = findViewById(R.id.sort_option);
+        trips = app.dbManager.getAll();
+        Log.v("Wanderlust", ""+trips.size());
 
         //set up the ListView for the trip list
         listTrips = findViewById(R.id.list_trips);
-        adapter = new TripAdapter(this, app.trips );
+        adapter = new TripAdapter(this, trips);
         listTrips.setAdapter(adapter);
         //adds an onItemClickListener, forwards to activity TripView and sets the title correctly
         listTrips.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -59,6 +62,8 @@ public class MyTrips extends BaseClass implements DialogListener{
 
             }
         });
+
+        Log.v("Wanderlust", ""+listTrips.getItemAtPosition(0));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.new_trip_button);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +91,8 @@ public class MyTrips extends BaseClass implements DialogListener{
     public void onResume(){
         super.onResume();
         Log.v("Wanderlust", "MyTrips: onResume()");
+        trips.clear();
+        trips = app.dbManager.getAll();
         adapter.notifyDataSetChanged();
     }
 
@@ -101,12 +108,10 @@ public class MyTrips extends BaseClass implements DialogListener{
         Log.v("Wanderlust", "reset approved - myTrips class");
         switch(((NewResetConfirmDialog)dialog).origin){
             case "Trips":
-                app.trips.clear();
-                app.entries.clear();
+                app.dbManager.reset();
                 break;
             case "SingleTrip":
-                app.trips.remove(single_trip_id);
-                app.clearEntriesForTrip(single_trip_id);
+                app.dbManager.deleteTrip(single_trip_id);
                 single_trip_id = -1;
                 break;
         }

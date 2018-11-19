@@ -26,8 +26,8 @@ public class EntryView extends BaseClass {
         entry_title = findViewById(R.id.entry_title);
         entry_text = findViewById(R.id.entry_text);
 
-        entry_title.setText(app.trips.get(trip_id).entries.get(entry_id).name);
-        entry_text.setText(app.trips.get(trip_id).entries.get(entry_id).text);
+        entry_title.setText(app.dbManager.getEntriesFromTrip(trip_id).get(entry_id).name);
+        entry_text.setText(app.dbManager.getEntriesFromTrip(trip_id).get(entry_id).content);
     }
 
     @Override

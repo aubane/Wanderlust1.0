@@ -112,7 +112,8 @@ public class NewTrip extends BaseClass {
         String trip_start = start_date.getText().toString();
         String trip_end = end_date.getText().toString();
         app.newTrip(new Trip(trip_name, trip_destination, trip_start, trip_end));
-        finish();
+        startActivity(new Intent(this, MyTrips.class));
+        //finish();
     }
 
     private void setDate() {

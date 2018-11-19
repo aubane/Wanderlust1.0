@@ -27,7 +27,7 @@ public class TripSerializer {
         mFilenameTrips = ftrips;
         mFilenameEntries = fentries;
     }
-
+/*
     public void saveTrips(ArrayList<Trip> trips) throws JSONException, IOException
     {
         // build an array in JSON
@@ -143,4 +143,5 @@ public class TripSerializer {
         }
         return entries;
     }
+    */
 }

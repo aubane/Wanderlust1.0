@@ -39,7 +39,7 @@ public class NewEntry extends BaseClass {
         String name = entry_name.getText().toString();
         if(name==null || name.length()==0) name = "New Entry";
         String text = entry_text.getText().toString();
-        app.newEntry(trip_id, new Entry(trip_id, name, text));
+        app.newEntry(new Entry(trip_id, name, text));
         finish();
     }
 

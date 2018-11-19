@@ -2,26 +2,34 @@ package ie.wit.aubane.wanderlust10.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import android.os.Handler;
 
 import ie.wit.aubane.wanderlust10.R;
 
 public class Home extends BaseClass {
 
-    Button my_trips_button;
+    private boolean isBackButtonPressed;
+    private static final int SPLASH_DURATION = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        my_trips_button = findViewById(R.id.start_button);
+        /*Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+                if(!isBackButtonPressed){
+                    Home.this.startActivity(new Intent(Home.this, LogIn.class));
+                }
+            }
+        }, SPLASH_DURATION);*/
+        startActivity(new Intent(Home.this, LogIn.class));
     }
 
-    public void myTripsButtonClicked(View view){
-        Log.v("Wanderlust", "MyTrips Button clicked");
-        startActivity(new Intent(this, MyTrips.class));
+    @Override
+    public void onBackPressed(){
+        isBackButtonPressed = true;
     }
 }

@@ -22,9 +22,15 @@
         </activity>
         <activity android:name=".activities.MyTrips"></activity>
         <activity android:name=".activities.TripView"></activity>
-        <activity android:name=".activities.NewEntry"></activity>
-        <activity android:name=".activities.NewTrip"></activity>
+        <activity android:name=".activities.NewEntry"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".activities.NewTrip"
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".activities.EntryView"></activity>
+        <activity android:name=".activities.LogIn"
+            android:windowSoftInputMode="stateVisible|adjustPan"></activity>
+        <activity android:name=".activities.Register"
+            android:windowSoftInputMode="stateVisible|adjustPan"></activity>
     </application>
 
 </manifest>

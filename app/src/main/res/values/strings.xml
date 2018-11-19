@@ -24,4 +24,12 @@
     <string name="sort_by_label">sort by:</string>
     <string name="menu_reset">Reset</string>
     <string name="menu_current_trip">Current Trip</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="email">E-Mail</string>
+    <string name="sign_in_button">Log In</string>
+    <string name="sign_up_button">Register</string>
+    <string name="menu_logout">Log out</string>
+    <string name="sign_up_link">New to Wanderlust? Register here</string>
+    <string name="sign_in_link">Already got an account? Log in here</string>
 </resources>
